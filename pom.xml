@@ -13,6 +13,7 @@
   <packaging>pom</packaging>
   <modules>
     <module>ingestion-service</module>
+    <module>persistence-service</module>
     <module>common</module>
   </modules>
 
