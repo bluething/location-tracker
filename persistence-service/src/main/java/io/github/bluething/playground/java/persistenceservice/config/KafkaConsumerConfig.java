@@ -11,6 +11,9 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Configuration
 class KafkaConsumerConfig {
     private final KafkaProperties kafkaProperties;
@@ -21,12 +24,9 @@ class KafkaConsumerConfig {
 
     @Bean
     public ConsumerFactory<String, LocationEvent> consumerFactory() {
-        var deserializer = new JsonDeserializer<>(LocationEvent.class, false);
+        Map<String, Object> props = new HashMap<>(kafkaProperties.buildConsumerProperties());
+        JsonDeserializer<LocationEvent> deserializer = new JsonDeserializer<>(LocationEvent.class);
         deserializer.addTrustedPackages("io.github.bluething.playground.java.persistenceservice.model");
-
-        var props = kafkaProperties.buildConsumerProperties();
-        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
 
         return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), deserializer);
     }
