@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table
+      author: habib.machpud
+      changes:
+        - sqlFile:
+            path: sql/changelog-1.0.0.sql
+            relativeToChangelogFile: true
+
+  - changeSet:
+      id: create-hypertable
+      author: habib.machpud
+      runInTransaction: false
+      changes:
+        - sqlFile:
+            path: sql/changelog-1.0.1.sql
+            relativeToChangelogFile: true
